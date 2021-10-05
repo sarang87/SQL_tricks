@@ -1,0 +1,9 @@
+
+-- subquery on fist purchase date
+SELECT H.transaction_no, H.customer_id, H.operator_id, H.purchase_date
+FROM Sales_Transactions_Header H
+INNER JOIN
+    (SELECT customer_id, MIN(purchase_date) As first_occurence
+    FROM Sales_Transactions_Header
+    GROUP BY customer_id) X
+ON H.customer_id = X.customer_id AND H.purchase_date = X.first_occurence
